@@ -1,0 +1,3 @@
+user_login_show:
+    pattern:  /user/{id}/logins
+    defaults: { _controller: UserBundle:UserLogin:show }

@@ -1,0 +1,42 @@
+UserBundle\Entity\UsersLogin:
+    type: entity
+    table: users_logins
+    id:
+        id:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        created:
+            type: datetime
+            nullable: false
+        userId:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: false
+            column: user_id
+        ipId:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: false
+            column: ip_id
+        os:
+            type: string
+            nullable: false
+            length: 80
+            options:
+                fixed: false
+        browserAgent:
+            type: text
+            nullable: false
+            length: 65535
+            options:
+                fixed: false
+            column: browser_agent
+    lifecycleCallbacks: {  }

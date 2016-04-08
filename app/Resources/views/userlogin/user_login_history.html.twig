@@ -1,0 +1,10 @@
+
+{% block body %}
+{% for user_login_item in user_login_items %}
+<h1>{{ user_login_item.id }}</h1>
+<h1>{{ user_login_item.userId }}</h1>
+<h1>{{ user_login_item.ipId }}</h1>
+<h1>{{ user_login_item.os }}</h1>
+<h1>{{ user_login_item.browserAgent }}</h1>
+{% endfor %}
+{% endblock %}
