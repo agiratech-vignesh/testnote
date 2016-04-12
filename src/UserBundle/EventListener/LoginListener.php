@@ -11,6 +11,7 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\Security\Http\SecurityEvents;
 use UserBundle\Controller\UserLoginController;
 use UserBundle\Entity\UserLogin;
+use UserBundle\Entity\Ip;
 use Doctrine\ORM\EntityManager;
 
 class LoginListener implements EventSubscriberInterface
@@ -43,20 +44,45 @@ class LoginListener implements EventSubscriberInterface
     public function onSecurityInteractiveLogin(InteractiveLoginEvent $event)
     {
         $user = $event->getAuthenticationToken()->getUser();
-        //echo $user->getId();
-        //echo "<pre>"; print_r($user ); echo "</pre>";
-
+        $user_id = $user->getId();
+        $ip_address = $event->getRequest()->getClientIp();
+        $ip_id = "";
+        $os_info = "";
+        $browser_agent = $event->getRequest()->server->get('HTTP_USER_AGENT');
+        $OS = array("Windows"   =>   "/windows|win32/i",
+                    "Linux"     =>   "/Linux/i",
+                    "Unix"      =>   "/Unix/i",
+                    "Mac"       =>   "/Mac/i"
+        );
+        foreach($OS as $key => $value){
+            if(preg_match($value, $browser_agent)){
+                $os_info = $key;
+                break;
+            }
+        }
+        
+        $ips = $this->em->getRepository('UserBundle:Ip')
+                ->findOneByIpAddress($ip_address);
+        if(!$ips){
+            $ip_data = new Ip();
+            $ip_data->setCreated(new \DateTime());
+            $ip_data->setIpAddress($ip_address);
+            $this->em->persist($ip_data);
+            $this->em->flush();
+            $ip_id  = $ip_data->getId();
+        } else {
+            $ip_id  = $ips->getId();
+        }
         if ($user instanceof UserInterface) {
             $user->setLastLogin(new \DateTime());
             $this->userManager->updateUser($user);
-            $user_id = $user->getId();
 
             $user_login = new UserLogin();
             $user_login->setCreated(new \DateTime());
             $user_login->setUserId($user_id);
-            $user_login->setIpId(3);
-            $user_login->setOs('Windows');
-            $user_login->setBrowserAgent('Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405');
+            $user_login->setIpId($ip_id);
+            $user_login->setOs($os_info);
+            $user_login->setBrowserAgent($browser_agent);
             $this->em->persist($user_login);
             $this->em->flush();
         }

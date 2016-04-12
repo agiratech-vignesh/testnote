@@ -5,6 +5,7 @@ namespace UserBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use UserBundle\Entity\Ip;
 
 
 class UserLoginController extends Controller
@@ -44,7 +45,7 @@ class UserLoginController extends Controller
 	    {
 	    	$user_logins = $this->getDoctrine()
             	->getRepository('UserBundle:UserLogin')
-            	->find($id);
+            	->findByUserId(2);
             if (!$user_logins) {
 		    	throw $this->createNotFoundException('No user logins found by id ' . $id);
 		    }
