@@ -6,6 +6,11 @@
 			<td>{{ user_login_items.id }}</td>
 		</tr>
 		<tr>
+			<th width="15%">Login Time</th>
+			<td> {{ user_login_items.created|date('Y-m-d H:i:s') }} </td>
+		</tr>
+		
+		<tr>
 			<th width="20%">User</th>
 			<td>{{ user_login_items.user.username }}</td>
 		</tr>

@@ -3,6 +3,7 @@
 <table width="100%">
 <tr>
 <th width="5%">Id</th>
+<th width="15%">Login Time</th>
 <th width="15%">User</th>
 <th width="10%">Ip</th>
 <th width="15%">Operating System</th>
@@ -11,6 +12,7 @@
 {% for user_login_item in user_login_items %}
 <tr>
 <td><a href={{ path('login_history', {'id': user_login_item.id }) }}> {{ user_login_item.id }}</a></td>
+<td> {{ user_login_item.created|date('Y-m-d H:i:s') }} </td>
 <td>{{ user_login_item.user.username }}</td>
 <td>{{ user_login_item.ip.ipAddress }}</td>
 <td>{{ user_login_item.os }}</td>

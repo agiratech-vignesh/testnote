@@ -64,12 +64,12 @@ class LoginListener implements EventSubscriberInterface
         $ips = $this->em->getRepository('UserBundle:Ip')
                 ->findOneByIpAddress($ip_address);
         if(!$ips){
-            $ip_data = new Ip();
-            $ip_data->setCreated(new \DateTime());
-            $ip_data->setIpAddress($ip_address);
-            $this->em->persist($ip_data);
+            $ips = new Ip();
+            $ips->setCreated(new \DateTime());
+            $ips->setIpAddress($ip_address);
+            $this->em->persist($ips);
             $this->em->flush();
-            $ip_id  = $ip_data->getId();
+            $ip_id  = $ips->getId();
         } else {
             $ip_id  = $ips->getId();
         }
@@ -80,11 +80,15 @@ class LoginListener implements EventSubscriberInterface
             $user_login = new UserLogin();
             $user_login->setCreated(new \DateTime());
             $user_login->setUserId($user_id);
+            $user_login->setUser($user);
             $user_login->setIpId($ip_id);
+            $user_login->setIp($ips);
             $user_login->setOs($os_info);
             $user_login->setBrowserAgent($browser_agent);
             $this->em->persist($user_login);
             $this->em->flush();
         }
+        //$this->redirect(path('admin_dashboard'));
     }
 }
+
