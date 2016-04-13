@@ -39,4 +39,15 @@ UserBundle\Entity\UserLogin:
             options:
                 fixed: false
             column: browser_agent
+    manyToOne:
+        user:
+          targetEntity: User
+          joinColumn:
+            name: user_id
+            referencedColumnName: id
+        ip:
+          targetEntity: Ip
+          joinColumn:
+            name: ip_id
+            referencedColumnName: id
     lifecycleCallbacks: {  }

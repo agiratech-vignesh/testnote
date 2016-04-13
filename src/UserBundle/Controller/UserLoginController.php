@@ -45,7 +45,7 @@ class UserLoginController extends Controller
 	    {
 	    	$user_logins = $this->getDoctrine()
             	->getRepository('UserBundle:UserLogin')
-            	->findByUserId(2);
+            	->findByUserId($user_id);
             if (!$user_logins) {
 		    	throw $this->createNotFoundException('No user logins found by id ' . $id);
 		    }

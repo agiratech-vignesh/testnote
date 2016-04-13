@@ -1,8 +1,25 @@
-
+{% extends 'base.html.twig' %}
 {% block body %}
-<h1>{{ user_login_items.id }}</h1>
-<h1>{{ user_login_items.userId }}</h1>
-<h1>{{ user_login_items.ipId }}</h1>
-<h1>{{ user_login_items.os }}</h1>
-<h1>{{ user_login_items.browserAgent }}</h1>
+	<table width="100%">
+		<tr>
+			<th width="20%">Id</th>
+			<td>{{ user_login_items.id }}</td>
+		</tr>
+		<tr>
+			<th width="20%">User</th>
+			<td>{{ user_login_items.user.username }}</td>
+		</tr>
+		<tr>
+			<th width="20%">Ip</th>	
+			<td>{{ user_login_items.ip.ipAddress }}</td>
+		</tr>
+		<tr>
+			<th width="20%">Operating System</th>
+			<td>{{ user_login_items.os }}</td>	
+		</tr>
+		<tr>
+			<th width="20%">User Agent</th>
+			<td>{{ user_login_items.browserAgent }}</td>
+		</tr>
+	</table>
 {% endblock %}

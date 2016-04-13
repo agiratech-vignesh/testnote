@@ -37,9 +37,11 @@
 </head>
     <body>
         {% include 'header_menu.html.twig' %}
-
+        <section class="for-full-back color-light " id="about">
+            <div class="container">
         {% block body %}{% endblock %}
-
+            </div>
+        </section>
         {% include 'footer.html.twig'%}
         
         {% block javascripts %}

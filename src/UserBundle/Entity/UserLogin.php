@@ -1,6 +1,10 @@
 <?php
 
 namespace UserBundle\Entity;
+use UserBundle\Entity\User;
+use UserBundle\Entity\Ip;
+use Doctrine\ORM\Mapping as ORM;
+
 
 /**
  * UserLogin
@@ -23,9 +27,23 @@ class UserLogin
     private $userId;
 
     /**
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @JoinColumn(name="user_id", referencedColumnName="id")
+     * @var int
+     */
+    private $user;
+
+    /**
      * @var int
      */
     private $ipId;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\Ip")
+     * @JoinColumn(name="ip_id", referencedColumnName="id")
+     * @var int
+     */
+    private $ip;
 
     /**
      * @var string
@@ -166,6 +184,54 @@ class UserLogin
     public function getBrowserAgent()
     {
         return $this->browserAgent;
+    }
+
+    /**
+     * Set user
+     *
+     * @param User $userId
+     *
+     * @return UserLogin
+     */
+    public function setUser(User $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set ip
+     *
+     * @param Ip $ip
+     *
+     * @return UserLogin
+     */
+    public function setIp(Ip $ip)
+    {
+        $this->ip = $ip;
+
+        return $this;
+    }
+
+    /**
+     * Get ip
+     *
+     * @return Ip
+     */
+    public function getIp()
+    {
+        return $this->ip;
     }
 }
 
