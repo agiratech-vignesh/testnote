@@ -43,6 +43,7 @@ class LoginListener implements EventSubscriberInterface
 
     public function onSecurityInteractiveLogin(InteractiveLoginEvent $event)
     {
+
         $user = $event->getAuthenticationToken()->getUser();
         $user_id = $user->getId();
         $ip_address = $event->getRequest()->getClientIp();
@@ -88,7 +89,5 @@ class LoginListener implements EventSubscriberInterface
             $this->em->persist($user_login);
             $this->em->flush();
         }
-        //$this->redirect(path('admin_dashboard'));
     }
 }
-
